@@ -10,9 +10,6 @@ openModalBtn.addEventListener("click", toggleModalWindow);
 modal.addEventListener("click", toggleModalWindow);
 modalBody.addEventListener("click", (e) => e.stopPropagation());
 
-// close via esc
-// close via btn(close icon)
-
 // закрытие через esc:
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && !modal.classList.contains("modalHidden")) {
@@ -29,13 +26,17 @@ closeBtn.addEventListener("click", toggleModalWindow);
 const registerForm = document.querySelector("#registerForm");
 const usernameInput = document.querySelector(".username");
 const lastnameInput = document.querySelector(".lastname");
+const firstnameInput = document.querySelector(".firstname");
 const usernameLabel = document.querySelector(".usernameLabel");
 const lastnameLabel = document.querySelector(".lastnameLabel");
+const firstnameLabel = document.querySelector(".firstnameLabel");
 
 const EmailInput = document.querySelector(".Email");
 const EmailLabel = document.querySelector(".EmailLabel");
 const passwordInput = document.querySelector(".password");
 const passwordLabel = document.querySelector(".passwordLabel");
+const ageInput = document.querySelector(".age");
+const ageLabel = document.querySelector(".ageLabel");
 
 function renderStatusMessage(parent, data) {
   if (parent.lastElementChild.nodeName === "P") {
@@ -70,6 +71,19 @@ function lastnameValidation(value) {
         color: "red",
       };
 }
+
+function firstnameValidation(value) {
+  return value.length >= 2 && value.length <= 30
+    ? {
+        text: "first name is correct",
+        color: "green",
+      }
+    : {
+        text: "first name is not valid",
+        color: "red",
+      };
+}
+
 //////
 function EmailValidation(value) {
   const hasNumbers = /\d/; // ищет любую цифру
@@ -97,7 +111,29 @@ function passwordValidation(value) {
         color: "green",
       };
 }
-//////
+
+function ageValidation(value) {
+  const age = Number(value);
+
+  if (!Number.isInteger(age)) {
+    return {
+      text: "age must be a number",
+      color: "red",
+    };
+  }
+
+  return age >= 1 && age <= 120
+    ? {
+        text: "valid data",
+        color: "green",
+      }
+    : {
+        text: "invalid data",
+        color: "red",
+      };
+}
+
+///////////////////
 usernameInput.addEventListener("input", (event) => {
   const statusData = usernameValidation(event.target.value);
   renderStatusMessage(usernameLabel, statusData);
@@ -106,6 +142,11 @@ usernameInput.addEventListener("input", (event) => {
 lastnameInput.addEventListener("input", (event) => {
   const statusData = lastnameValidation(event.target.value);
   renderStatusMessage(lastnameLabel, statusData);
+});
+
+firstnameInput.addEventListener("input", (event) => {
+  const statusData = firstnameValidation(event.target.value);
+  renderStatusMessage(firstnameLabel, statusData);
 });
 //////
 EmailInput.addEventListener("input", (event) => {
@@ -117,5 +158,10 @@ passwordInput.addEventListener("input", (event) => {
   const statusData = passwordValidation(event.target.value);
   renderStatusMessage(passwordLabel, statusData);
 });
-////////
+
+ageInput.addEventListener("input", (event) => {
+  const statusData = ageValidation(event.target.value);
+  renderStatusMessage(ageLabel, statusData);
+});
+
 ///////////////////////////////////////////////////////////

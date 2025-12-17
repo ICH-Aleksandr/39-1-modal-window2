@@ -104,11 +104,11 @@ function passwordValidation(value) {
   return value.length >= 8 && specialCharRegex.test(value)
     ? {
         text: "password is correct",
-        color: "red",
+        color: "green",
       }
     : {
         text: "minimum 8 characters and 1 special character",
-        color: "green",
+        color: "red",
       };
 }
 
